@@ -4,7 +4,9 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryKey;
 import net.minecraft.world.World;
 
@@ -12,9 +14,6 @@ public class TeleporterEntity extends BlockEntity {
 
     private RegistryKey<World> targetWorldKey = World.OVERWORLD;
     private BlockPos targetPos = BlockPos.ORIGIN;
-
-    private TeleporterEntity target;
-    private boolean targetChanged = false;
 
     public TeleporterEntity() {
         super(FastTravel.TELEPORTER_ENTITY);
@@ -28,15 +27,7 @@ public class TeleporterEntity extends BlockEntity {
         tag.putInt("targetY", targetPos.getY());
         tag.putInt("targetZ", targetPos.getZ());
 
-        if (World.OVERWORLD.equals(targetWorldKey)) {
-            tag.putString("targetWorld", "OVERWORLD");
-        } else if (World.NETHER.equals(targetWorldKey)) {
-            tag.putString("targetWorld", "NETHER");
-        } else if (World.END.equals(targetWorldKey)) {
-            tag.putString("targetWorld", "END");
-        } else {
-            System.out.println("Error: Invalid Target World Registry Key");
-        }
+        tag.putString("targetWorld", targetWorldKey.getValue().toString());
 
         return tag;
     }
@@ -51,47 +42,20 @@ public class TeleporterEntity extends BlockEntity {
 
         String strWorldKey = tag.getString("targetWorld");
 
-        RegistryKey<World> targetWorldKey = World.OVERWORLD;
-
-        switch (strWorldKey) {
-            case "OVERWORLD":
-                targetWorldKey = World.OVERWORLD;
-                break;
-            case "NETHER":
-                targetWorldKey = World.NETHER;
-                break;
-            case "END":
-                targetWorldKey = World.END;
-                break;
-            default:
-                System.out.println("Error: Invalid Target World Tag");
-                break;
-        }
-
-        this.targetWorldKey = targetWorldKey;
+        targetWorldKey = RegistryKey.of(Registry.DIMENSION, new Identifier(strWorldKey));
         targetPos = new BlockPos(x, y, z);
-        targetChanged = true;
+
     }
 
-    private void lazyTargetCalculation() throws IllegalAccessException {
-        if(!targetChanged){}
-        else if (targetWorldKey == World.OVERWORLD && targetPos == BlockPos.ORIGIN) {
-            target = null;
-            targetChanged = false;
-        }
-        else if(world instanceof ServerWorld){
-            World  targetWorld = ((ServerWorld) world).getServer().getWorld(targetWorldKey);
-            targetChanged = false;
-            target = FastTravel.TELEPORTER_ENTITY.get(targetWorld, targetPos);
+    public TeleporterEntity getTarget(World world) throws IllegalAccessException {
+        if (targetWorldKey == World.OVERWORLD && targetPos == BlockPos.ORIGIN) return null;
+        if(world instanceof ServerWorld){
+            World targetWorld = ((ServerWorld) world).getServer().getWorld(targetWorldKey);
+            return FastTravel.TELEPORTER_ENTITY.get(targetWorld, targetPos);
         }
         else {
             throw new java.lang.IllegalAccessException("BlockEntity should be used by logical server");
         }
-    }
-
-    public TeleporterEntity getTarget() throws IllegalAccessException {
-        lazyTargetCalculation();
-        return target;
     }
 
     public void setTarget(TeleporterEntity target) {
@@ -100,8 +64,6 @@ public class TeleporterEntity extends BlockEntity {
         }
         targetWorldKey = target.getWorld().getRegistryKey();
         targetPos = target.getPos();
-        targetChanged = true;
-        System.out.println("[FT]: "+targetPos+" "+targetWorldKey);
         markDirty();
     }
 

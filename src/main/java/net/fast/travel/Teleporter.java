@@ -14,15 +14,12 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-
-import java.util.function.ToIntFunction;
 
 public class Teleporter extends SlabBlock implements BlockEntityProvider {
 
@@ -52,7 +49,7 @@ public class Teleporter extends SlabBlock implements BlockEntityProvider {
             TeleporterEntity tp_entity = FastTravel.TELEPORTER_ENTITY.get(world, pos);
             TeleporterEntity target;
             try {
-                target = tp_entity.getTarget();
+                target = tp_entity.getTarget(world);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
                 return;
