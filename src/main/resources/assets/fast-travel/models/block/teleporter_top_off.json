@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "minecraft:block/quartz_block_top",
+    "top": "fast-travel:block/teleporter_top_off",
+    "side": "minecraft:block/quartz_block_side"
+  }
+}

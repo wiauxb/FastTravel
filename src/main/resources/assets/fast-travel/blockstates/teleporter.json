@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "type=bottom,linked=true": {
+      "model": "fast-travel:block/teleporter"
+    },
+    "type=bottom,linked=false": {
+      "model": "fast-travel:block/teleporter_off"
+    },
+    "type=double": {
+      "model": "minecraft:block/quartz_block"
+    },
+    "type=top,linked=true": {
+      "model": "fast-travel:block/teleporter_top_on"
+    },
+    "type=top,linked=false": {
+      "model": "fast-travel:block/teleporter_top_off"
+    }
+  }
+}
+

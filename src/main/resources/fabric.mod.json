@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "fast-travel",
+  "version": 1.0,
+
+  "name": "Fast Travel",
+  "description": "To travel really far, really fast",
+  "authors": [
+    "tibas21"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/fast-travel/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.fast.travel.FastTravel"
+    ]
+  },
+
+  "mixins": [
+    "fast-travel.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}
