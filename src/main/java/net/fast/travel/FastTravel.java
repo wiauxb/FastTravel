@@ -28,5 +28,7 @@ public class FastTravel implements ModInitializer {
 	V recharger la partie et utiliser un Teleporter fait crasher le jeu (NullpointerException, sans doute problème de chargement de tag)
 	- la commande "moveToWorld" ne semble pas adaptée aux items et blocks tombants (glitch à gogo)
 	- [INCONSISTANT] probleme avec les ticking entity, lorsqu'on change de dimension (ou plutôt qu'on revient dans l'ancienne)
- 	- lier un teleporteur dans un chunk non chargé ne sauve pas son tag
+ 	V lier un teleporteur dans un chunk non chargé ne sauve pas son tag
+ 	- systême de selection doit être étendu au multijoueur
+ 	- Chunk chargé par la selection doit être déchargé et la selection effacée à la déconnexion
  */

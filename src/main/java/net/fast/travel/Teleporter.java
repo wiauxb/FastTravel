@@ -21,7 +21,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
@@ -116,6 +116,7 @@ public class Teleporter extends SlabBlock implements BlockEntityProvider {
             if( selection != null && !selection.equals(entity1)){
 
                 link(entity1, selection);
+                selection.getWorld().getChunkManager().setChunkForced(new ChunkPos(selection.getPos()), false);
                 selection = null;
 
                 if(!player.isCreative()){
@@ -125,10 +126,12 @@ public class Teleporter extends SlabBlock implements BlockEntityProvider {
             }
             else {
                 if (selection == entity1){
+                    selection.getWorld().getChunkManager().setChunkForced(new ChunkPos(selection.getPos()), false);
                     selection = null;
                     world.playSound(null, pos, SoundEvents.BLOCK_BEACON_DEACTIVATE, SoundCategory.BLOCKS, 1f, 1f);
                 } else {
                     selection = entity1;
+                    selection.getWorld().getChunkManager().setChunkForced(new ChunkPos(selection.getPos()), true);
                     world.playSound(null, pos, SoundEvents.BLOCK_BEACON_ACTIVATE, SoundCategory.BLOCKS, 1f, 1f);
                 }
             }

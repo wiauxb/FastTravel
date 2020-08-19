@@ -33,7 +33,7 @@ public class TeleporterEntity extends BlockEntity {
     }
 
     @Override
-    public void fromTag(BlockState state, CompoundTag tag) { //TODO real exception gestion
+    public void fromTag(BlockState state, CompoundTag tag) {
         super.fromTag(state, tag);
 
         int x = tag.getInt("targetX");
