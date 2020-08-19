@@ -1,5 +1,7 @@
 package net.fast.travel;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -9,6 +11,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -18,8 +21,11 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class Teleporter extends SlabBlock implements BlockEntityProvider {
 
@@ -76,7 +82,7 @@ public class Teleporter extends SlabBlock implements BlockEntityProvider {
                     this.method_30229();
                     this.moveToWorld(serverWorld2);
                     this.world.getProfiler().pop();*/
-                    float y_offset = ((targetWorld.getBlockState(dest).get(TYPE) == SlabType.BOTTOM) ? .5f : 1);
+                    float y_offset = getYOffset(targetWorld.getBlockState(dest));
                     entity.teleport(dest.getX()+.5f, dest.getY()+y_offset, dest.getZ()+.5f);
                     world.playSound(null, dest, SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.BLOCKS, 1f, 1f);
                 }
@@ -84,6 +90,10 @@ public class Teleporter extends SlabBlock implements BlockEntityProvider {
             }
         }
         super.onSteppedOn(world, pos, entity);
+    }
+
+    private float getYOffset(BlockState blockState){
+        return (blockState.get(TYPE) == SlabType.BOTTOM) ? .5f : 1;
     }
 
     private void link(TeleporterEntity first, TeleporterEntity second){
@@ -129,6 +139,24 @@ public class Teleporter extends SlabBlock implements BlockEntityProvider {
     @Override
     public BlockEntity createBlockEntity(BlockView world) {
         return new TeleporterEntity();
+    }
+
+
+    @Environment(EnvType.CLIENT)
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+        if(world.getBlockState(pos).get(LINKED)){
+            for(int i = 0; i < 2; ++i) {
+                double x = (double)pos.getX() + random.nextDouble();
+                double y = (double)pos.getY() + getYOffset(state) + 0.25D;
+                double z = (double)pos.getZ() + random.nextDouble();
+                double Vx = ((double)random.nextFloat() - 0.5D) * 0.5D;
+                double Vy = (random.nextFloat() * 2.0F);
+                double Vz = ((double)random.nextFloat() - 0.5D) * 0.5D;
+
+                world.addParticle(ParticleTypes.PORTAL, x, y, z, Vx, Vy, Vz);
+            }
+        }
+
     }
 
 }
