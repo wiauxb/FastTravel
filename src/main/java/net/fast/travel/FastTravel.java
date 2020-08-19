@@ -28,5 +28,5 @@ public class FastTravel implements ModInitializer {
 	V recharger la partie et utiliser un Teleporter fait crasher le jeu (NullpointerException, sans doute problème de chargement de tag)
 	- la commande "moveToWorld" ne semble pas adaptée aux items et blocks tombants (glitch à gogo)
 	- [INCONSISTANT] probleme avec les ticking entity, lorsqu'on change de dimension (ou plutôt qu'on revient dans l'ancienne)
- 	- le portail de l'end ne va que dans un sens Overworld -> End et ne s'allume pas: end recoit 0, 0, 0, semble seulement charger le tag coté client ...
+ 	- lier un teleporteur dans un chunk non chargé ne sauve pas son tag
  */
