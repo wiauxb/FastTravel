@@ -21,7 +21,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
@@ -30,7 +29,6 @@ import java.util.Random;
 public class Teleporter extends SlabBlock implements BlockEntityProvider {
 
     public static final BooleanProperty LINKED = BooleanProperty.of("linked");
-    private static TeleporterEntity selection = null;
 
     public Teleporter() {
         super(FabricBlockSettings.copyOf(Blocks.QUARTZ_SLAB).lightLevel((blockState) -> blockState.get(LINKED) ? 10 : 0));
@@ -76,12 +74,6 @@ public class Teleporter extends SlabBlock implements BlockEntityProvider {
                     if(world.getRegistryKey() != targetWorld.getRegistryKey()) {
                         entity.moveToWorld((ServerWorld) targetWorld);
                     }
-                    /*
-                    this.world.getProfiler().push("portal");
-                    this.netherPortalTime = i;
-                    this.method_30229();
-                    this.moveToWorld(serverWorld2);
-                    this.world.getProfiler().pop();*/
                     float y_offset = getYOffset(targetWorld.getBlockState(dest));
                     entity.teleport(dest.getX()+.5f, dest.getY()+y_offset, dest.getZ()+.5f);
                     world.playSound(null, dest, SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.BLOCKS, 1f, 1f);
@@ -110,29 +102,28 @@ public class Teleporter extends SlabBlock implements BlockEntityProvider {
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        ItemStack stack = player.getStackInHand(hand);
-        if(stack.getItem() == Items.DIAMOND && !world.isClient){
-            TeleporterEntity entity1 = FastTravel.TELEPORTER_ENTITY.get(world, pos);
-            if( selection != null && !selection.equals(entity1)){
+        if(!world.isClient) {
+            ServerPlayerEntityExt player_ext = (ServerPlayerEntityExt) player;
+            ItemStack stack = player.getStackInHand(hand);
+            if (stack.getItem() == Items.DIAMOND) {
+                TeleporterEntity entity1 = FastTravel.TELEPORTER_ENTITY.get(world, pos);
+                if (player_ext.hasSelection() && !player_ext.getSelection().equals(entity1)) {
 
-                link(entity1, selection);
-                selection.getWorld().getChunkManager().setChunkForced(new ChunkPos(selection.getPos()), false);
-                selection = null;
+                    link(entity1, player_ext.getSelection());
+                    player_ext.resetSelection();
 
-                if(!player.isCreative()){
-                    stack.decrement(1);
-                }
-                world.playSound(null, pos, SoundEvents.BLOCK_BEACON_POWER_SELECT, SoundCategory.BLOCKS, 1f, 1f);
-            }
-            else {
-                if (selection == entity1){
-                    selection.getWorld().getChunkManager().setChunkForced(new ChunkPos(selection.getPos()), false);
-                    selection = null;
-                    world.playSound(null, pos, SoundEvents.BLOCK_BEACON_DEACTIVATE, SoundCategory.BLOCKS, 1f, 1f);
+                    if (!player.isCreative()) {
+                        stack.decrement(1);
+                    }
+                    world.playSound(null, pos, SoundEvents.BLOCK_BEACON_POWER_SELECT, SoundCategory.BLOCKS, 1f, 1f);
                 } else {
-                    selection = entity1;
-                    selection.getWorld().getChunkManager().setChunkForced(new ChunkPos(selection.getPos()), true);
-                    world.playSound(null, pos, SoundEvents.BLOCK_BEACON_ACTIVATE, SoundCategory.BLOCKS, 1f, 1f);
+                    if (player_ext.getSelection() == entity1) {
+                        player_ext.resetSelection();
+                        world.playSound(null, pos, SoundEvents.BLOCK_BEACON_DEACTIVATE, SoundCategory.BLOCKS, 1f, 1f);
+                    } else {
+                        player_ext.setSelection(entity1);
+                        world.playSound(null, pos, SoundEvents.BLOCK_BEACON_ACTIVATE, SoundCategory.BLOCKS, 1f, 1f);
+                    }
                 }
             }
         }
