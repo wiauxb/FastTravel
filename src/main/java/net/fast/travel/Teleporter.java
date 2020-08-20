@@ -74,6 +74,11 @@ public class Teleporter extends SlabBlock implements BlockEntityProvider {
                     if(world.getRegistryKey() != targetWorld.getRegistryKey()) {
                         entity.moveToWorld((ServerWorld) targetWorld);
                     }
+                    /*
+                    while(entity.getEntityWorld() != targetWorld){
+                        System.out.println("wait");
+                    }
+                     */
                     float y_offset = getYOffset(targetWorld.getBlockState(dest));
                     entity.teleport(dest.getX()+.5f, dest.getY()+y_offset, dest.getZ()+.5f);
                     world.playSound(null, dest, SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.BLOCKS, 1f, 1f);

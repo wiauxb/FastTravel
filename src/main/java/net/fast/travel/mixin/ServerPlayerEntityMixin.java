@@ -29,7 +29,6 @@ public class ServerPlayerEntityMixin extends EntityMixin implements ServerPlayer
 
     public void resetSelection() {
         if (selection != null) {
-            System.out.println("[FT] Reset selection");
             selection.getWorld().getChunkManager().setChunkForced(new ChunkPos(selection.getPos()), false);
             selection = null;
         }
