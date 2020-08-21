@@ -26,10 +26,11 @@ public class FastTravel implements ModInitializer {
 /*TODO générale:
 	V l'inventaire "disparait" à cause de la commande "moveToWorld" mais recharger la partie le fait revenir
 	V recharger la partie et utiliser un Teleporter fait crasher le jeu (NullpointerException, sans doute problème de chargement de tag)
-	- probleme avec les ticking entity: lié au passage nether, si le joueur n'a jamais utilisé de netherportal NullPointer exception ServerPlayerEntity.java:702 (lié à moveToWorld, ServerPlayerEntity.java:613, Entity.java:2222)
  	V lier un teleporteur dans un chunk non chargé ne sauve pas son tag
  	V systême de selection doit être étendu au multijoueur
  	V Chunk chargé par la selection doit être déchargé et la selection effacée à la déconnexion
  	- teleport à la position relative au teleporter
  	- le passage end -> overworld ne teleport pas au bon endroit car le passage à l'overworld n'est pas fini lorsqu'on tp aux bonnes positions
+ 	- probleme avec les ticking entity: lié au passage nether, si le joueur n'a jamais utilisé de netherportal NullPointer exception ServerPlayerEntity.java:702 (lié à moveToWorld, ServerPlayerEntity.java:613, Entity.java:2222)
+    - POUR REGLER LES DEUX POINTS d'au-dessus: inject pour vérifier si on est sur un teleporter, si oui ne pas faire appel à getTeleportTarget car c'est cette fonction qui bouge au mauvais endroit crée les portails du nether etc ...
  */
