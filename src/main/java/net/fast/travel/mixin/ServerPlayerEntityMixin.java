@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ServerPlayerEntity.class)
-public class ServerPlayerEntityMixin extends EntityMixin implements ServerPlayerEntityExt {
+public abstract class ServerPlayerEntityMixin extends EntityMixin implements ServerPlayerEntityExt {
 
     private TeleporterEntity selection;
 

@@ -12,6 +12,7 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -70,16 +71,22 @@ public class Teleporter extends SlabBlock implements BlockEntityProvider {
                 World targetWorld = target.getWorld();
 
                 world.playSound(null, pos, SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.BLOCKS, 1f, 1f);
+                EntityExt teleportedEntity = entity_ext;
                 if (targetWorld instanceof ServerWorld) {
-                    if(world.getRegistryKey() != targetWorld.getRegistryKey()) {
-                        entity.moveToWorld((ServerWorld) targetWorld);
-                    }
-
                     float y_offset = getYOffset(targetWorld.getBlockState(dest));
-                    entity.teleport(dest.getX()+.5f, dest.getY()+y_offset, dest.getZ()+.5f);
+                    if (entity instanceof ServerPlayerEntity){
+                        ((ServerPlayerEntity) entity).teleport((ServerWorld) targetWorld,
+                                dest.getX() + .5f, dest.getY() + y_offset, dest.getZ() + .5f, entity.yaw, entity.pitch);
+                    } else {
+                        if(world.getRegistryKey() != targetWorld.getRegistryKey()) {
+                            teleportedEntity = (EntityExt) ((EntityExt) entity).moveToTeleporter(target);
+                        } else {
+                            entity.teleport(dest.getX()+.5f, dest.getY()+y_offset, dest.getZ()+.5f);
+                        }
+                    }
                     world.playSound(null, dest, SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.BLOCKS, 1f, 1f);
                 }
-                entity_ext.setTeleporterCooldown();
+                teleportedEntity.setTeleporterCooldown();
             }
         }
         super.onSteppedOn(world, pos, entity);
