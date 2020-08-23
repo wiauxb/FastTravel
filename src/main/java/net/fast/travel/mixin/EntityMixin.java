@@ -1,8 +1,8 @@
 package net.fast.travel.mixin;
 
-import net.fast.travel.EntityExt;
-import net.fast.travel.Teleporter;
-import net.fast.travel.TeleporterEntity;
+import net.fast.travel.extensions.EntityExt;
+import net.fast.travel.blocks.Teleporter;
+import net.fast.travel.blocks.TeleporterEntity;
 import net.minecraft.block.enums.SlabType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

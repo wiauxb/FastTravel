@@ -1,5 +1,6 @@
-package net.fast.travel;
+package net.fast.travel.blocks;
 
+import net.fast.travel.FastTravel;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.nbt.CompoundTag;

@@ -1,8 +1,11 @@
-package net.fast.travel;
+package net.fast.travel.blocks;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.fast.travel.extensions.EntityExt;
+import net.fast.travel.FastTravel;
+import net.fast.travel.extensions.ServerPlayerEntityExt;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.SlabType;

@@ -1,4 +1,6 @@
-package net.fast.travel;
+package net.fast.travel.extensions;
+
+import net.fast.travel.blocks.TeleporterEntity;
 
 public interface ServerPlayerEntityExt extends EntityExt{
 

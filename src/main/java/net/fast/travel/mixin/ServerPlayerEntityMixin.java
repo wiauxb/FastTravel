@@ -1,7 +1,7 @@
 package net.fast.travel.mixin;
 
-import net.fast.travel.ServerPlayerEntityExt;
-import net.fast.travel.TeleporterEntity;
+import net.fast.travel.extensions.ServerPlayerEntityExt;
+import net.fast.travel.blocks.TeleporterEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.math.ChunkPos;
 import org.spongepowered.asm.mixin.Mixin;

@@ -1,5 +1,6 @@
-package net.fast.travel;
+package net.fast.travel.blocks;
 
+import net.fast.travel.FastTravel;
 import net.minecraft.item.*;
 import net.minecraft.util.ActionResult;
 

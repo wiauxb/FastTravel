@@ -2,6 +2,9 @@ package net.fast.travel;
 
 
 import net.fabricmc.api.ModInitializer;
+import net.fast.travel.blocks.Teleporter;
+import net.fast.travel.blocks.TeleporterEntity;
+import net.fast.travel.blocks.TeleporterItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
