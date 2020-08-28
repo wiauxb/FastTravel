@@ -38,7 +38,8 @@ public abstract class EntityMixin implements EntityExt {
 
     @Shadow public float yaw;
     @Shadow public float pitch;
-    private int teleporterCooldown = 0;
+    @Shadow public boolean teleporting;
+    public int teleporterCooldown = 0;
 
     public boolean canUseTeleporter(){
         return teleporterCooldown == 0;

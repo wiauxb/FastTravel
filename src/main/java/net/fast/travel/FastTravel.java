@@ -37,6 +37,6 @@ public class FastTravel implements ModInitializer {
  	V probleme avec les ticking entity: lié au passage nether, si le joueur n'a jamais utilisé de netherportal NullPointer exception ServerPlayerEntity.java:702 (lié à moveToWorld, ServerPlayerEntity.java:613, Entity.java:2222)
     V les items disparaisses si le teleporter est dans un chunk non chargé
     - joueur sort du minecart coté client mais pas coté server: -> bug général pour rideable
-    - minecart ne tp qu'une fois
+    V minecart ne tp qu'une fois
     o teleportation detectable par observer
  */

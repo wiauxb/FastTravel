@@ -4,6 +4,7 @@
   "package": "net.fast.travel.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "AbstractMinecartEntityMixin",
     "EntityMixin",
     "ServerPlayerEntityMixin"
   ],
