@@ -9,8 +9,6 @@ public interface EntityExt {
     boolean canUseTeleporter();
     void setTeleporterCooldown();
 
-    CompoundTag toTag(CompoundTag compoundTag);
-
     void copyFromMixin(EntityExt entity);
     Entity moveToTeleporter(TeleporterEntity teleporter);
 }

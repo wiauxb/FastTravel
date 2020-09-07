@@ -87,7 +87,7 @@ public abstract class EntityMixin implements EntityExt {
     }
 
     public void copyFromMixin(EntityExt original) {
-        CompoundTag compoundTag = original.toTag(new CompoundTag());
+        CompoundTag compoundTag = ((Entity) original).toTag(new CompoundTag());
         compoundTag.remove("Dimension");
         this.fromTag(compoundTag);
     }
