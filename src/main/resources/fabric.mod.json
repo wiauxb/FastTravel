@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "fast-travel",
-  "version": 1.0,
+  "version": "0.1.1",
 
   "name": "Fast Travel",
   "description": "To travel really far, really fast",
