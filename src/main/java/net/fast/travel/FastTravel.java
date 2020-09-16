@@ -5,12 +5,13 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.structure.v1.FabricStructureBuilder;
 import net.fast.travel.blocks.Teleporter;
 import net.fast.travel.blocks.TeleporterEntity;
-import net.fast.travel.blocks.TeleporterItem;
 import net.fast.travel.structure.TeleporterTempleFeature;
 import net.fast.travel.structure.TeleporterTempleGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.structure.StructurePieceType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.BuiltinRegistries;
@@ -21,7 +22,9 @@ import net.minecraft.world.gen.feature.*;
 public class FastTravel implements ModInitializer {
 
     public static final Block TELEPORTER = new Teleporter();
-    public static final BlockItem TELEPORTER_ITEM = new TeleporterItem();
+    public static final BlockItem TELEPORTER_ITEM = new BlockItem(TELEPORTER, new Item.Settings()
+                                                                .group(ItemGroup.DECORATIONS)
+                                                                .maxCount(8));
     public static BlockEntityType<TeleporterEntity> TELEPORTER_ENTITY;
 
     public static final StructurePieceType TELEPORTER_TEMPLE_PIECE_TYPE = TeleporterTempleGenerator.Piece::new;
