@@ -13,7 +13,7 @@ public class DefaultBiomeFeaturesMixin {
 
     @Inject(method = "addPlainsFeatures(Lnet/minecraft/world/biome/GenerationSettings$Builder;)V", at = @At("TAIL"))
     private static void addPlainsFeatures(GenerationSettings.Builder builder, CallbackInfo ci) {
-        builder.structureFeature(FastTravel.TELEPORTER_TEMPLE_FEATURE_CONFIGURED);
+        builder.structureFeature(FastTravel.TELEPORTER_TEMPLE_CONFIGURED);
     }
 
 }

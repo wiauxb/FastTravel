@@ -28,8 +28,8 @@ public class FastTravel implements ModInitializer {
     public static BlockEntityType<TeleporterEntity> TELEPORTER_ENTITY;
 
     public static final StructurePieceType TELEPORTER_TEMPLE_PIECE_TYPE = TeleporterTempleGenerator.Piece::new;
-    public static final StructureFeature<DefaultFeatureConfig> TELEPORTER_TEMPLE_FEATURE = new TeleporterTempleFeature(DefaultFeatureConfig.CODEC);
-    public static final ConfiguredStructureFeature<?, ?> TELEPORTER_TEMPLE_FEATURE_CONFIGURED = TELEPORTER_TEMPLE_FEATURE.configure(DefaultFeatureConfig.DEFAULT);
+    public static final StructureFeature<DefaultFeatureConfig> TELEPORTER_TEMPLE = new TeleporterTempleFeature(DefaultFeatureConfig.CODEC);
+    public static final ConfiguredStructureFeature<?, ?> TELEPORTER_TEMPLE_CONFIGURED = TELEPORTER_TEMPLE.configure(DefaultFeatureConfig.DEFAULT);
 
 
     @Override
@@ -40,14 +40,14 @@ public class FastTravel implements ModInitializer {
                 BlockEntityType.Builder.create(TeleporterEntity::new, TELEPORTER).build(null));
 
         Registry.register(Registry.STRUCTURE_PIECE, new Identifier("fast-travel", "teleporter_temple_piece"), TELEPORTER_TEMPLE_PIECE_TYPE);
-        FabricStructureBuilder.create(new Identifier("fast-travel", "teleporter_temple"), TELEPORTER_TEMPLE_FEATURE)
+        FabricStructureBuilder.create(new Identifier("fast-travel", "teleporter_temple"), TELEPORTER_TEMPLE)
                 .step(GenerationStep.Feature.SURFACE_STRUCTURES)
                 .defaultConfig(32, 8, 12345)
                 .adjustsSurface()
                 .register();
 
         BuiltinRegistries.add(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, new Identifier("fast-travel", "teleporter_temple"),
-                TELEPORTER_TEMPLE_FEATURE_CONFIGURED);
+                TELEPORTER_TEMPLE_CONFIGURED);
 
     }
 }
