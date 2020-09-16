@@ -16,10 +16,10 @@ import java.util.Random;
 
 public class TeleporterTempleGenerator {
 
-    private static final Identifier IGLOO_TOP = new Identifier("igloo/top");
+    private static final Identifier TEMPLATE = new Identifier("fast-travel:teleporter_temple");
 
     public static void addPieces(StructureManager manager, BlockPos pos, BlockRotation rotation, List<StructurePiece> pieces) {
-        pieces.add(new Piece(manager, pos, IGLOO_TOP, rotation));
+        pieces.add(new Piece(manager, pos, TEMPLATE, rotation));
     }
 
     public static class Piece extends SimpleStructurePiece {
