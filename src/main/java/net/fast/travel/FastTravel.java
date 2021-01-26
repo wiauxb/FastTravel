@@ -70,7 +70,7 @@ public class FastTravel implements ModInitializer {
  	V le passage end -> overworld ne teleport pas au bon endroit car le passage à l'overworld n'est pas fini lorsqu'on tp aux bonnes positions
  	V probleme avec les ticking entity: lié au passage nether, si le joueur n'a jamais utilisé de netherportal NullPointer exception ServerPlayerEntity.java:702 (lié à moveToWorld, ServerPlayerEntity.java:613, Entity.java:2222)
     V les items disparaisses si le teleporter est dans un chunk non chargé
-    - joueur sort du minecart coté client mais pas coté server: -> bug général pour rideable
+    V joueur sort du minecart coté client mais pas coté server: -> bug général pour rideable
     V minecart ne tp qu'une fois
     V teleportation detectable par observer
     V structure naturelles

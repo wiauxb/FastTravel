@@ -68,7 +68,7 @@ public class Teleporter extends SlabBlock implements BlockEntityProvider {
                 world.setBlockState(pos, world.getBlockState(pos).with(LINKED, false));
                 return;
             }
-            if (entity.canUsePortals() && entity_ext.canUseTeleporter()) {
+            if (entity.canUsePortals() && entity_ext.canUseTeleporter() && !entity.hasVehicle() && !entity.hasPassengers()) {
 
                 BlockPos dest = target.getPos();
                 World targetWorld = target.getWorld();
