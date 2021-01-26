@@ -63,12 +63,12 @@ public class Teleporter extends SlabBlock implements BlockEntityProvider {
                 return;
             }
 
-            if(target == null || target.getWorld().getBlockState(target.getPos()).getBlock() != FastTravel.TELEPORTER) {
+            if (target == null || target.getWorld().getBlockState(target.getPos()).getBlock() != FastTravel.TELEPORTER) {
                 world.playSound(null, pos, SoundEvents.BLOCK_BEACON_DEACTIVATE, SoundCategory.BLOCKS, 1f, 1f);
                 world.setBlockState(pos, world.getBlockState(pos).with(LINKED, false));
                 return;
             }
-            if(entity.canUsePortals() && entity_ext.canUseTeleporter()) {
+            if (entity.canUsePortals() && entity_ext.canUseTeleporter()) {
 
                 BlockPos dest = target.getPos();
                 World targetWorld = target.getWorld();
@@ -77,36 +77,41 @@ public class Teleporter extends SlabBlock implements BlockEntityProvider {
                 EntityExt teleportedEntity = entity_ext;
                 if (targetWorld instanceof ServerWorld) {
                     float y_offset = getYOffset(targetWorld.getBlockState(dest));
-                    if (entity instanceof ServerPlayerEntity){
+                    if (entity instanceof ServerPlayerEntity) {
                         ((ServerPlayerEntity) entity).teleport((ServerWorld) targetWorld,
                                 dest.getX() + .5f, dest.getY() + y_offset, dest.getZ() + .5f, entity.yaw, entity.pitch);
                     } else {
-                        if(world.getRegistryKey() != targetWorld.getRegistryKey()) {
+                        if (world.getRegistryKey() != targetWorld.getRegistryKey()) {
                             teleportedEntity = (EntityExt) ((EntityExt) entity).moveToTeleporter(target);
                         } else {
-                            entity.teleport(dest.getX()+.5f, dest.getY()+y_offset, dest.getZ()+.5f);
+                            entity.teleport(dest.getX() + .5f, dest.getY() + y_offset, dest.getZ() + .5f);
                         }
                     }
                     world.playSound(null, dest, SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.BLOCKS, 1f, 1f);
                 }
                 teleportedEntity.setTeleporterCooldown();
+                world.setBlockState(pos, world.getBlockState(pos).with(LINKED, false));
+                world.setBlockState(pos, world.getBlockState(pos).with(LINKED, true));
+                targetWorld.setBlockState(dest, targetWorld.getBlockState(dest).with(LINKED, false));
+                targetWorld.setBlockState(dest, targetWorld.getBlockState(dest).with(LINKED, true));
             }
         }
         super.onSteppedOn(world, pos, entity);
     }
 
+
     private float getYOffset(BlockState blockState){
         return (blockState.get(TYPE) == SlabType.BOTTOM) ? .5f : 1;
     }
 
-    private void link(TeleporterEntity first, TeleporterEntity second){
+    public void link(TeleporterEntity first, TeleporterEntity second){
         first.setTarget(second);
         second.setTarget(first);
         first.getWorld().setBlockState(first.getPos(), first.getCachedState().with(LINKED, true));
         second.getWorld().setBlockState(second.getPos(), second.getCachedState().with(LINKED, true));
     }
 
-    private void unlink(TeleporterEntity first, TeleporterEntity second){
+    public void unlink(TeleporterEntity first, TeleporterEntity second){
         first.getWorld().setBlockState(first.getPos(), first.getCachedState().with(LINKED, false));
         second.getWorld().setBlockState(second.getPos(), second.getCachedState().with(LINKED, false));
     }

@@ -1,6 +1,7 @@
 package net.fast.travel.structure;
 
 import net.fast.travel.FastTravel;
+import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.structure.*;
 import net.minecraft.structure.processor.BlockIgnoreStructureProcessor;
@@ -60,6 +61,9 @@ public class TeleporterTempleGenerator {
         @Override
         protected void handleMetadata(String metadata, BlockPos pos, ServerWorldAccess serverWorldAccess, Random random,
                                       BlockBox boundingBox) {
+            if ("teleporter".equals(metadata)) {
+                serverWorldAccess.setBlockState(pos, Blocks.AIR.getDefaultState(), 3);
+            }
         }
     }
 

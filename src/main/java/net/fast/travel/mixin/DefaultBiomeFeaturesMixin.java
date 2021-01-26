@@ -16,4 +16,24 @@ public class DefaultBiomeFeaturesMixin {
         builder.structureFeature(FastTravel.TELEPORTER_TEMPLE_CONFIGURED);
     }
 
+    @Inject(method = "addSwampFeatures(Lnet/minecraft/world/biome/GenerationSettings$Builder;)V", at = @At("TAIL"))
+    private static void addSwampFeatures(GenerationSettings.Builder builder, CallbackInfo ci) {
+        builder.structureFeature(FastTravel.TELEPORTER_TEMPLE_CONFIGURED);
+    }
+
+    @Inject(method = "addMushroomFieldsFeatures(Lnet/minecraft/world/biome/GenerationSettings$Builder;)V", at = @At("TAIL"))
+    private static void addMushroomFieldsFeatures(GenerationSettings.Builder builder, CallbackInfo ci) {
+        builder.structureFeature(FastTravel.TELEPORTER_TEMPLE_CONFIGURED);
+    }
+
+    @Inject(method = "addDesertFeatures(Lnet/minecraft/world/biome/GenerationSettings$Builder;)V", at = @At("TAIL"))
+    private static void addDesertFeatures(GenerationSettings.Builder builder, CallbackInfo ci) {
+        builder.structureFeature(FastTravel.TELEPORTER_TEMPLE_CONFIGURED);
+    }
+
+    @Inject(method = "addGiantTaigaGrass(Lnet/minecraft/world/biome/GenerationSettings$Builder;)V", at = @At("TAIL"))
+    private static void addGiantTaigaGrass(GenerationSettings.Builder builder, CallbackInfo ci) {
+        builder.structureFeature(FastTravel.TELEPORTER_TEMPLE_CONFIGURED);
+    }
+
 }

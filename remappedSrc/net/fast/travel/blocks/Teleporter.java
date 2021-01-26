@@ -99,14 +99,14 @@ public class Teleporter extends SlabBlock implements BlockEntityProvider {
         return (blockState.get(TYPE) == SlabType.BOTTOM) ? .5f : 1;
     }
 
-    private void link(TeleporterEntity first, TeleporterEntity second){
+    public void link(TeleporterEntity first, TeleporterEntity second){
         first.setTarget(second);
         second.setTarget(first);
         first.getWorld().setBlockState(first.getPos(), first.getCachedState().with(LINKED, true));
         second.getWorld().setBlockState(second.getPos(), second.getCachedState().with(LINKED, true));
     }
 
-    private void unlink(TeleporterEntity first, TeleporterEntity second){
+    public void unlink(TeleporterEntity first, TeleporterEntity second){
         first.getWorld().setBlockState(first.getPos(), first.getCachedState().with(LINKED, false));
         second.getWorld().setBlockState(second.getPos(), second.getCachedState().with(LINKED, false));
     }
