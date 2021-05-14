@@ -1,5 +1,5 @@
 # FastTravel
-Minecraft Mod adding teleporters to the game
+Minecraft 1.16.3 Mod adding teleporters to the game
 
 ## Installation
 You need [fabricMC](https://fabricmc.net/) and the [fabric API](https://www.curseforge.com/minecraft/mc-mods/fabric-api) in order to run the mod.
