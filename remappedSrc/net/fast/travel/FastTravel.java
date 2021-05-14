@@ -2,7 +2,10 @@ package net.fast.travel;
 
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.fabricmc.fabric.api.structure.v1.FabricStructureBuilder;
+import net.fabricmc.fabric.impl.biome.modification.BiomeModificationImpl;
 import net.fast.travel.blocks.Teleporter;
 import net.fast.travel.blocks.TeleporterEntity;
 import net.fast.travel.structure.TeleporterTempleFeature;
@@ -63,15 +66,15 @@ public class FastTravel implements ModInitializer {
  	V lier un teleporteur dans un chunk non chargé ne sauve pas son tag
  	V systême de selection doit être étendu au multijoueur
  	V Chunk chargé par la selection doit être déchargé et la selection effacée à la déconnexion
- 	o teleport à la position relative au teleporter
+ 	X teleport à la position relative au teleporter
  	V le passage end -> overworld ne teleport pas au bon endroit car le passage à l'overworld n'est pas fini lorsqu'on tp aux bonnes positions
  	V probleme avec les ticking entity: lié au passage nether, si le joueur n'a jamais utilisé de netherportal NullPointer exception ServerPlayerEntity.java:702 (lié à moveToWorld, ServerPlayerEntity.java:613, Entity.java:2222)
     V les items disparaisses si le teleporter est dans un chunk non chargé
-    - joueur sort du minecart coté client mais pas coté server: -> bug général pour rideable
+    V joueur sort du minecart coté client mais pas coté server: -> bug général pour rideable
     V minecart ne tp qu'une fois
-    o teleportation detectable par observer
+    V teleportation detectable par observer
     V structure naturelles
-    o certaines structures sont liées, d'autres non
+    X certaines structures sont liées, d'autres non
         - la target semble ne pas avoir de world
         - n'a pas encore de suport pour la rotation
         - locateStructure trouve la structure de dépard
